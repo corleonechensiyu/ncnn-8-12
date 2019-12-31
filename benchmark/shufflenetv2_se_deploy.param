@@ -1,0 +1,521 @@
+7767517
+519 582
+Input            data             0 1 data 0=300 1=300 2=3
+Split            splitncnn_0      1 7 data data_splitncnn_0 data_splitncnn_1 data_splitncnn_2 data_splitncnn_3 data_splitncnn_4 data_splitncnn_5 data_splitncnn_6
+Convolution      stage1/conv      1 1 data_splitncnn_6 stage1/conv 0=24 1=3 2=1 3=2 4=1 5=0 6=648
+BatchNorm        stage1/conv/bn   1 1 stage1/conv stage1/conv_stage1/conv/bn 0=24
+Scale            stage1/conv/bn/scale 1 1 stage1/conv_stage1/conv/bn stage1/conv_stage1/conv/bn/scale 0=24 1=1
+ReLU             stage1/conv/relu 1 1 stage1/conv_stage1/conv/bn/scale stage1/conv_stage1/conv/relu
+Pooling          stage1/pool      1 1 stage1/conv_stage1/conv/relu stage1/pool 0=0 1=3 2=2 3=0 4=0
+Split            splitncnn_1      1 2 stage1/pool stage1/pool_splitncnn_0 stage1/pool_splitncnn_1
+ConvolutionDepthWise stage_2_1/conv4  1 1 stage1/pool_splitncnn_1 stage_2_1/conv4 0=24 1=5 2=1 3=2 4=2 5=0 6=600 7=24
+BatchNorm        stage_2_1/conv4/bn 1 1 stage_2_1/conv4 stage_2_1/conv4_stage_2_1/conv4/bn 0=24
+Scale            stage_2_1/conv4/bn/scale 1 1 stage_2_1/conv4_stage_2_1/conv4/bn stage_2_1/conv4_stage_2_1/conv4/bn/scale 0=24 1=1
+Split            splitncnn_2      1 2 stage_2_1/conv4_stage_2_1/conv4/bn/scale stage_2_1/conv4_stage_2_1/conv4/bn/scale_splitncnn_0 stage_2_1/conv4_stage_2_1/conv4/bn/scale_splitncnn_1
+Pooling          pool1_1/gap      1 1 stage_2_1/conv4_stage_2_1/conv4/bn/scale_splitncnn_1 pool1_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc1_1/sqz        1 1 pool1_1/gap fc1_1/sqz 0=2 1=1 2=48 3=1
+ReLU             relu1_1/sqz      1 1 fc1_1/sqz fc1_1/sqz_relu1_1/sqz
+InnerProduct     fc1_1/exc        1 1 fc1_1/sqz_relu1_1/sqz fc1_1/exc 0=24 1=1 2=48 3=1
+Sigmoid          sigm1_1/gate     1 1 fc1_1/exc fc1_1/exc_sigm1_1/gate
+Scale            scale1_1         2 1 stage_2_1/conv4_stage_2_1/conv4/bn/scale_splitncnn_0 fc1_1/exc_sigm1_1/gate scale1_1 0=-233 1=0
+Convolution      stage_2_1/conv5  1 1 scale1_1 stage_2_1/conv5 0=58 1=1 2=1 3=1 4=0 5=0 6=1392
+BatchNorm        stage_2_1/conv5/bn 1 1 stage_2_1/conv5 stage_2_1/conv5_stage_2_1/conv5/bn 0=58
+Scale            stage_2_1/conv5/bn/scale 1 1 stage_2_1/conv5_stage_2_1/conv5/bn stage_2_1/conv5_stage_2_1/conv5/bn/scale 0=58 1=1
+ReLU             stage_2_1/conv5/relu 1 1 stage_2_1/conv5_stage_2_1/conv5/bn/scale stage_2_1/conv5_stage_2_1/conv5/relu
+Convolution      stage_2_1/conv1  1 1 stage1/pool_splitncnn_0 stage_2_1/conv1 0=58 1=1 2=1 3=1 4=0 5=0 6=1392
+BatchNorm        stage_2_1/conv1/bn 1 1 stage_2_1/conv1 stage_2_1/conv1_stage_2_1/conv1/bn 0=58
+Scale            stage_2_1/conv1/bn/scale 1 1 stage_2_1/conv1_stage_2_1/conv1/bn stage_2_1/conv1_stage_2_1/conv1/bn/scale 0=58 1=1
+ReLU             stage_2_1/conv1/relu 1 1 stage_2_1/conv1_stage_2_1/conv1/bn/scale stage_2_1/conv1_stage_2_1/conv1/relu
+ConvolutionDepthWise stage_2_1/conv2  1 1 stage_2_1/conv1_stage_2_1/conv1/relu stage_2_1/conv2 0=58 1=5 2=1 3=2 4=2 5=0 6=1450 7=58
+BatchNorm        stage_2_1/conv2/bn 1 1 stage_2_1/conv2 stage_2_1/conv2_stage_2_1/conv2/bn 0=58
+Scale            stage_2_1/conv2/bn/scale 1 1 stage_2_1/conv2_stage_2_1/conv2/bn stage_2_1/conv2_stage_2_1/conv2/bn/scale 0=58 1=1
+Split            splitncnn_3      1 2 stage_2_1/conv2_stage_2_1/conv2/bn/scale stage_2_1/conv2_stage_2_1/conv2/bn/scale_splitncnn_0 stage_2_1/conv2_stage_2_1/conv2/bn/scale_splitncnn_1
+Pooling          pool1_2/gap      1 1 stage_2_1/conv2_stage_2_1/conv2/bn/scale_splitncnn_1 pool1_2/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc1_2/sqz        1 1 pool1_2/gap fc1_2/sqz 0=4 1=1 2=232 3=1
+ReLU             relu1_2/sqz      1 1 fc1_2/sqz fc1_2/sqz_relu1_2/sqz
+InnerProduct     fc1_2/exc        1 1 fc1_2/sqz_relu1_2/sqz fc1_2/exc 0=58 1=1 2=232 3=1
+Sigmoid          sigm1_2/gate     1 1 fc1_2/exc fc1_2/exc_sigm1_2/gate
+Scale            scale1_2         2 1 stage_2_1/conv2_stage_2_1/conv2/bn/scale_splitncnn_0 fc1_2/exc_sigm1_2/gate scale1_2 0=-233 1=0
+Convolution      stage_2_1/conv3  1 1 scale1_2 stage_2_1/conv3 0=58 1=1 2=1 3=1 4=0 5=0 6=3364
+BatchNorm        stage_2_1/conv3/bn 1 1 stage_2_1/conv3 stage_2_1/conv3_stage_2_1/conv3/bn 0=58
+Scale            stage_2_1/conv3/bn/scale 1 1 stage_2_1/conv3_stage_2_1/conv3/bn stage_2_1/conv3_stage_2_1/conv3/bn/scale 0=58 1=1
+ReLU             stage_2_1/conv3/relu 1 1 stage_2_1/conv3_stage_2_1/conv3/bn/scale stage_2_1/conv3_stage_2_1/conv3/relu
+Concat           stage_2_1/concat 2 1 stage_2_1/conv5_stage_2_1/conv5/relu stage_2_1/conv3_stage_2_1/conv3/relu stage_2_1/concat 0=0
+ShuffleChannel   stage_2_1/shuffle 1 1 stage_2_1/concat stage_2_1/shuffle 0=2
+Slice            stage_2_2/slice1 1 2 stage_2_1/shuffle stage_2_2/slice1 stage_2_2/slice2 -23300=2,58,-233 1=0
+Convolution      stage_2_2/conv1  1 1 stage_2_2/slice2 stage_2_2/conv1 0=58 1=1 2=1 3=1 4=0 5=0 6=3364
+BatchNorm        stage_2_2/conv1/bn 1 1 stage_2_2/conv1 stage_2_2/conv1_stage_2_2/conv1/bn 0=58
+Scale            stage_2_2/conv1/bn/scale 1 1 stage_2_2/conv1_stage_2_2/conv1/bn stage_2_2/conv1_stage_2_2/conv1/bn/scale 0=58 1=1
+ReLU             stage_2_2/conv1/relu 1 1 stage_2_2/conv1_stage_2_2/conv1/bn/scale stage_2_2/conv1_stage_2_2/conv1/relu
+ConvolutionDepthWise stage_2_2/conv2  1 1 stage_2_2/conv1_stage_2_2/conv1/relu stage_2_2/conv2 0=58 1=5 2=1 3=1 4=2 5=0 6=1450 7=58
+BatchNorm        stage_2_2/conv2/bn 1 1 stage_2_2/conv2 stage_2_2/conv2_stage_2_2/conv2/bn 0=58
+Scale            stage_2_2/conv2/bn/scale 1 1 stage_2_2/conv2_stage_2_2/conv2/bn stage_2_2/conv2_stage_2_2/conv2/bn/scale 0=58 1=1
+Split            splitncnn_4      1 2 stage_2_2/conv2_stage_2_2/conv2/bn/scale stage_2_2/conv2_stage_2_2/conv2/bn/scale_splitncnn_0 stage_2_2/conv2_stage_2_2/conv2/bn/scale_splitncnn_1
+Pooling          pool2_1/gap      1 1 stage_2_2/conv2_stage_2_2/conv2/bn/scale_splitncnn_1 pool2_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc2_1/sqz        1 1 pool2_1/gap fc2_1/sqz 0=4 1=1 2=232 3=1
+ReLU             relu2_1/sqz      1 1 fc2_1/sqz fc2_1/sqz_relu2_1/sqz
+InnerProduct     fc2_1/exc        1 1 fc2_1/sqz_relu2_1/sqz fc2_1/exc 0=58 1=1 2=232 3=1
+Sigmoid          sigm2_1/gate     1 1 fc2_1/exc fc2_1/exc_sigm2_1/gate
+Scale            scale2_1         2 1 stage_2_2/conv2_stage_2_2/conv2/bn/scale_splitncnn_0 fc2_1/exc_sigm2_1/gate scale2_1 0=-233 1=0
+Convolution      stage_2_2/conv3  1 1 scale2_1 stage_2_2/conv3 0=58 1=1 2=1 3=1 4=0 5=0 6=3364
+BatchNorm        stage_2_2/conv3/bn 1 1 stage_2_2/conv3 stage_2_2/conv3_stage_2_2/conv3/bn 0=58
+Scale            stage_2_2/conv3/bn/scale 1 1 stage_2_2/conv3_stage_2_2/conv3/bn stage_2_2/conv3_stage_2_2/conv3/bn/scale 0=58 1=1
+ReLU             stage_2_2/conv3/relu 1 1 stage_2_2/conv3_stage_2_2/conv3/bn/scale stage_2_2/conv3_stage_2_2/conv3/relu
+Concat           stage_2_2/concat 2 1 stage_2_2/slice1 stage_2_2/conv3_stage_2_2/conv3/relu stage_2_2/concat 0=0
+ShuffleChannel   stage_2_2/shuffle 1 1 stage_2_2/concat stage_2_2/shuffle 0=2
+Slice            stage_2_3/slice1 1 2 stage_2_2/shuffle stage_2_3/slice1 stage_2_3/slice2 -23300=2,58,-233 1=0
+Convolution      stage_2_3/conv1  1 1 stage_2_3/slice2 stage_2_3/conv1 0=58 1=1 2=1 3=1 4=0 5=0 6=3364
+BatchNorm        stage_2_3/conv1/bn 1 1 stage_2_3/conv1 stage_2_3/conv1_stage_2_3/conv1/bn 0=58
+Scale            stage_2_3/conv1/bn/scale 1 1 stage_2_3/conv1_stage_2_3/conv1/bn stage_2_3/conv1_stage_2_3/conv1/bn/scale 0=58 1=1
+ReLU             stage_2_3/conv1/relu 1 1 stage_2_3/conv1_stage_2_3/conv1/bn/scale stage_2_3/conv1_stage_2_3/conv1/relu
+ConvolutionDepthWise stage_2_3/conv2  1 1 stage_2_3/conv1_stage_2_3/conv1/relu stage_2_3/conv2 0=58 1=5 2=1 3=1 4=2 5=0 6=1450 7=58
+BatchNorm        stage_2_3/conv2/bn 1 1 stage_2_3/conv2 stage_2_3/conv2_stage_2_3/conv2/bn 0=58
+Scale            stage_2_3/conv2/bn/scale 1 1 stage_2_3/conv2_stage_2_3/conv2/bn stage_2_3/conv2_stage_2_3/conv2/bn/scale 0=58 1=1
+Split            splitncnn_5      1 2 stage_2_3/conv2_stage_2_3/conv2/bn/scale stage_2_3/conv2_stage_2_3/conv2/bn/scale_splitncnn_0 stage_2_3/conv2_stage_2_3/conv2/bn/scale_splitncnn_1
+Pooling          pool3_1/gap      1 1 stage_2_3/conv2_stage_2_3/conv2/bn/scale_splitncnn_1 pool3_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc3_1/sqz        1 1 pool3_1/gap fc3_1/sqz 0=4 1=1 2=232 3=1
+ReLU             relu3_1/sqz      1 1 fc3_1/sqz fc3_1/sqz_relu3_1/sqz
+InnerProduct     fc3_1/exc        1 1 fc3_1/sqz_relu3_1/sqz fc3_1/exc 0=58 1=1 2=232 3=1
+Sigmoid          sigm3_1/gate     1 1 fc3_1/exc fc3_1/exc_sigm3_1/gate
+Scale            scale3_1         2 1 stage_2_3/conv2_stage_2_3/conv2/bn/scale_splitncnn_0 fc3_1/exc_sigm3_1/gate scale3_1 0=-233 1=0
+Convolution      stage_2_3/conv3  1 1 scale3_1 stage_2_3/conv3 0=58 1=1 2=1 3=1 4=0 5=0 6=3364
+BatchNorm        stage_2_3/conv3/bn 1 1 stage_2_3/conv3 stage_2_3/conv3_stage_2_3/conv3/bn 0=58
+Scale            stage_2_3/conv3/bn/scale 1 1 stage_2_3/conv3_stage_2_3/conv3/bn stage_2_3/conv3_stage_2_3/conv3/bn/scale 0=58 1=1
+ReLU             stage_2_3/conv3/relu 1 1 stage_2_3/conv3_stage_2_3/conv3/bn/scale stage_2_3/conv3_stage_2_3/conv3/relu
+Concat           stage_2_3/concat 2 1 stage_2_3/slice1 stage_2_3/conv3_stage_2_3/conv3/relu stage_2_3/concat 0=0
+ShuffleChannel   stage_2_3/shuffle 1 1 stage_2_3/concat stage_2_3/shuffle 0=2
+Slice            stage_2_4/slice1 1 2 stage_2_3/shuffle stage_2_4/slice1 stage_2_4/slice2 -23300=2,58,-233 1=0
+Convolution      stage_2_4/conv1  1 1 stage_2_4/slice2 stage_2_4/conv1 0=58 1=1 2=1 3=1 4=0 5=0 6=3364
+BatchNorm        stage_2_4/conv1/bn 1 1 stage_2_4/conv1 stage_2_4/conv1_stage_2_4/conv1/bn 0=58
+Scale            stage_2_4/conv1/bn/scale 1 1 stage_2_4/conv1_stage_2_4/conv1/bn stage_2_4/conv1_stage_2_4/conv1/bn/scale 0=58 1=1
+ReLU             stage_2_4/conv1/relu 1 1 stage_2_4/conv1_stage_2_4/conv1/bn/scale stage_2_4/conv1_stage_2_4/conv1/relu
+ConvolutionDepthWise stage_2_4/conv2  1 1 stage_2_4/conv1_stage_2_4/conv1/relu stage_2_4/conv2 0=58 1=5 2=1 3=1 4=2 5=0 6=1450 7=58
+BatchNorm        stage_2_4/conv2/bn 1 1 stage_2_4/conv2 stage_2_4/conv2_stage_2_4/conv2/bn 0=58
+Scale            stage_2_4/conv2/bn/scale 1 1 stage_2_4/conv2_stage_2_4/conv2/bn stage_2_4/conv2_stage_2_4/conv2/bn/scale 0=58 1=1
+Split            splitncnn_6      1 2 stage_2_4/conv2_stage_2_4/conv2/bn/scale stage_2_4/conv2_stage_2_4/conv2/bn/scale_splitncnn_0 stage_2_4/conv2_stage_2_4/conv2/bn/scale_splitncnn_1
+Pooling          pool4_1/gap      1 1 stage_2_4/conv2_stage_2_4/conv2/bn/scale_splitncnn_1 pool4_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc4_1/sqz        1 1 pool4_1/gap fc4_1/sqz 0=4 1=1 2=232 3=1
+ReLU             relu4_1/sqz      1 1 fc4_1/sqz fc4_1/sqz_relu4_1/sqz
+InnerProduct     fc4_1/exc        1 1 fc4_1/sqz_relu4_1/sqz fc4_1/exc 0=58 1=1 2=232 3=1
+Sigmoid          sigm4_1/gate     1 1 fc4_1/exc fc4_1/exc_sigm4_1/gate
+Scale            scale4_1         2 1 stage_2_4/conv2_stage_2_4/conv2/bn/scale_splitncnn_0 fc4_1/exc_sigm4_1/gate scale4_1 0=-233 1=0
+Convolution      stage_2_4/conv3  1 1 scale4_1 stage_2_4/conv3 0=58 1=1 2=1 3=1 4=0 5=0 6=3364
+BatchNorm        stage_2_4/conv3/bn 1 1 stage_2_4/conv3 stage_2_4/conv3_stage_2_4/conv3/bn 0=58
+Scale            stage_2_4/conv3/bn/scale 1 1 stage_2_4/conv3_stage_2_4/conv3/bn stage_2_4/conv3_stage_2_4/conv3/bn/scale 0=58 1=1
+ReLU             stage_2_4/conv3/relu 1 1 stage_2_4/conv3_stage_2_4/conv3/bn/scale stage_2_4/conv3_stage_2_4/conv3/relu
+Concat           stage_2_4/concat 2 1 stage_2_4/slice1 stage_2_4/conv3_stage_2_4/conv3/relu stage_2_4/concat 0=0
+ShuffleChannel   stage_2_4/shuffle 1 1 stage_2_4/concat stage_2_4/shuffle 0=2
+Split            splitncnn_7      1 2 stage_2_4/shuffle stage_2_4/shuffle_splitncnn_0 stage_2_4/shuffle_splitncnn_1
+ConvolutionDepthWise stage_3_1/conv4  1 1 stage_2_4/shuffle_splitncnn_1 stage_3_1/conv4 0=116 1=5 2=1 3=2 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_1/conv4/bn 1 1 stage_3_1/conv4 stage_3_1/conv4_stage_3_1/conv4/bn 0=116
+Scale            stage_3_1/conv4/bn/scale 1 1 stage_3_1/conv4_stage_3_1/conv4/bn stage_3_1/conv4_stage_3_1/conv4/bn/scale 0=116 1=1
+Split            splitncnn_8      1 2 stage_3_1/conv4_stage_3_1/conv4/bn/scale stage_3_1/conv4_stage_3_1/conv4/bn/scale_splitncnn_0 stage_3_1/conv4_stage_3_1/conv4/bn/scale_splitncnn_1
+Pooling          pool5_1/gap      1 1 stage_3_1/conv4_stage_3_1/conv4/bn/scale_splitncnn_1 pool5_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc5_1/sqz        1 1 pool5_1/gap fc5_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu5_1/sqz      1 1 fc5_1/sqz fc5_1/sqz_relu5_1/sqz
+InnerProduct     fc5_1/exc        1 1 fc5_1/sqz_relu5_1/sqz fc5_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm5_1/gate     1 1 fc5_1/exc fc5_1/exc_sigm5_1/gate
+Scale            scale5_1         2 1 stage_3_1/conv4_stage_3_1/conv4/bn/scale_splitncnn_0 fc5_1/exc_sigm5_1/gate scale5_1 0=-233 1=0
+Convolution      stage_3_1/conv5  1 1 scale5_1 stage_3_1/conv5 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_1/conv5/bn 1 1 stage_3_1/conv5 stage_3_1/conv5_stage_3_1/conv5/bn 0=116
+Scale            stage_3_1/conv5/bn/scale 1 1 stage_3_1/conv5_stage_3_1/conv5/bn stage_3_1/conv5_stage_3_1/conv5/bn/scale 0=116 1=1
+ReLU             stage_3_1/conv5/relu 1 1 stage_3_1/conv5_stage_3_1/conv5/bn/scale stage_3_1/conv5_stage_3_1/conv5/relu
+Convolution      stage_3_1/conv1  1 1 stage_2_4/shuffle_splitncnn_0 stage_3_1/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_1/conv1/bn 1 1 stage_3_1/conv1 stage_3_1/conv1_stage_3_1/conv1/bn 0=116
+Scale            stage_3_1/conv1/bn/scale 1 1 stage_3_1/conv1_stage_3_1/conv1/bn stage_3_1/conv1_stage_3_1/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_1/conv1/relu 1 1 stage_3_1/conv1_stage_3_1/conv1/bn/scale stage_3_1/conv1_stage_3_1/conv1/relu
+ConvolutionDepthWise stage_3_1/conv2  1 1 stage_3_1/conv1_stage_3_1/conv1/relu stage_3_1/conv2 0=116 1=5 2=1 3=2 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_1/conv2/bn 1 1 stage_3_1/conv2 stage_3_1/conv2_stage_3_1/conv2/bn 0=116
+Scale            stage_3_1/conv2/bn/scale 1 1 stage_3_1/conv2_stage_3_1/conv2/bn stage_3_1/conv2_stage_3_1/conv2/bn/scale 0=116 1=1
+Split            splitncnn_9      1 2 stage_3_1/conv2_stage_3_1/conv2/bn/scale stage_3_1/conv2_stage_3_1/conv2/bn/scale_splitncnn_0 stage_3_1/conv2_stage_3_1/conv2/bn/scale_splitncnn_1
+Pooling          pool5_2/gap      1 1 stage_3_1/conv2_stage_3_1/conv2/bn/scale_splitncnn_1 pool5_2/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc5_2/sqz        1 1 pool5_2/gap fc5_2/sqz 0=8 1=1 2=928 3=1
+ReLU             relu5_2/sqz      1 1 fc5_2/sqz fc5_2/sqz_relu5_2/sqz
+InnerProduct     fc5_2/exc        1 1 fc5_2/sqz_relu5_2/sqz fc5_2/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm5_2/gate     1 1 fc5_2/exc fc5_2/exc_sigm5_2/gate
+Scale            scale5_2         2 1 stage_3_1/conv2_stage_3_1/conv2/bn/scale_splitncnn_0 fc5_2/exc_sigm5_2/gate scale5_2 0=-233 1=0
+Convolution      stage_3_1/conv3  1 1 scale5_2 stage_3_1/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_1/conv3/bn 1 1 stage_3_1/conv3 stage_3_1/conv3_stage_3_1/conv3/bn 0=116
+Scale            stage_3_1/conv3/bn/scale 1 1 stage_3_1/conv3_stage_3_1/conv3/bn stage_3_1/conv3_stage_3_1/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_1/conv3/relu 1 1 stage_3_1/conv3_stage_3_1/conv3/bn/scale stage_3_1/conv3_stage_3_1/conv3/relu
+Concat           stage_3_1/concat 2 1 stage_3_1/conv5_stage_3_1/conv5/relu stage_3_1/conv3_stage_3_1/conv3/relu stage_3_1/concat 0=0
+ShuffleChannel   stage_3_1/shuffle 1 1 stage_3_1/concat stage_3_1/shuffle 0=2
+Slice            stage_3_2/slice1 1 2 stage_3_1/shuffle stage_3_2/slice1 stage_3_2/slice2 -23300=2,116,-233 1=0
+Convolution      stage_3_2/conv1  1 1 stage_3_2/slice2 stage_3_2/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_2/conv1/bn 1 1 stage_3_2/conv1 stage_3_2/conv1_stage_3_2/conv1/bn 0=116
+Scale            stage_3_2/conv1/bn/scale 1 1 stage_3_2/conv1_stage_3_2/conv1/bn stage_3_2/conv1_stage_3_2/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_2/conv1/relu 1 1 stage_3_2/conv1_stage_3_2/conv1/bn/scale stage_3_2/conv1_stage_3_2/conv1/relu
+ConvolutionDepthWise stage_3_2/conv2  1 1 stage_3_2/conv1_stage_3_2/conv1/relu stage_3_2/conv2 0=116 1=5 2=1 3=1 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_2/conv2/bn 1 1 stage_3_2/conv2 stage_3_2/conv2_stage_3_2/conv2/bn 0=116
+Scale            stage_3_2/conv2/bn/scale 1 1 stage_3_2/conv2_stage_3_2/conv2/bn stage_3_2/conv2_stage_3_2/conv2/bn/scale 0=116 1=1
+Split            splitncnn_10     1 2 stage_3_2/conv2_stage_3_2/conv2/bn/scale stage_3_2/conv2_stage_3_2/conv2/bn/scale_splitncnn_0 stage_3_2/conv2_stage_3_2/conv2/bn/scale_splitncnn_1
+Pooling          pool6_1/gap      1 1 stage_3_2/conv2_stage_3_2/conv2/bn/scale_splitncnn_1 pool6_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc6_1/sqz        1 1 pool6_1/gap fc6_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu6_1/sqz      1 1 fc6_1/sqz fc6_1/sqz_relu6_1/sqz
+InnerProduct     fc6_1/exc        1 1 fc6_1/sqz_relu6_1/sqz fc6_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm6_1/gate     1 1 fc6_1/exc fc6_1/exc_sigm6_1/gate
+Scale            scale6_1         2 1 stage_3_2/conv2_stage_3_2/conv2/bn/scale_splitncnn_0 fc6_1/exc_sigm6_1/gate scale6_1 0=-233 1=0
+Convolution      stage_3_2/conv3  1 1 scale6_1 stage_3_2/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_2/conv3/bn 1 1 stage_3_2/conv3 stage_3_2/conv3_stage_3_2/conv3/bn 0=116
+Scale            stage_3_2/conv3/bn/scale 1 1 stage_3_2/conv3_stage_3_2/conv3/bn stage_3_2/conv3_stage_3_2/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_2/conv3/relu 1 1 stage_3_2/conv3_stage_3_2/conv3/bn/scale stage_3_2/conv3_stage_3_2/conv3/relu
+Concat           stage_3_2/concat 2 1 stage_3_2/slice1 stage_3_2/conv3_stage_3_2/conv3/relu stage_3_2/concat 0=0
+ShuffleChannel   stage_3_2/shuffle 1 1 stage_3_2/concat stage_3_2/shuffle 0=2
+Slice            stage_3_3/slice1 1 2 stage_3_2/shuffle stage_3_3/slice1 stage_3_3/slice2 -23300=2,116,-233 1=0
+Convolution      stage_3_3/conv1  1 1 stage_3_3/slice2 stage_3_3/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_3/conv1/bn 1 1 stage_3_3/conv1 stage_3_3/conv1_stage_3_3/conv1/bn 0=116
+Scale            stage_3_3/conv1/bn/scale 1 1 stage_3_3/conv1_stage_3_3/conv1/bn stage_3_3/conv1_stage_3_3/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_3/conv1/relu 1 1 stage_3_3/conv1_stage_3_3/conv1/bn/scale stage_3_3/conv1_stage_3_3/conv1/relu
+ConvolutionDepthWise stage_3_3/conv2  1 1 stage_3_3/conv1_stage_3_3/conv1/relu stage_3_3/conv2 0=116 1=5 2=1 3=1 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_3/conv2/bn 1 1 stage_3_3/conv2 stage_3_3/conv2_stage_3_3/conv2/bn 0=116
+Scale            stage_3_3/conv2/bn/scale 1 1 stage_3_3/conv2_stage_3_3/conv2/bn stage_3_3/conv2_stage_3_3/conv2/bn/scale 0=116 1=1
+Split            splitncnn_11     1 2 stage_3_3/conv2_stage_3_3/conv2/bn/scale stage_3_3/conv2_stage_3_3/conv2/bn/scale_splitncnn_0 stage_3_3/conv2_stage_3_3/conv2/bn/scale_splitncnn_1
+Pooling          pool7_1/gap      1 1 stage_3_3/conv2_stage_3_3/conv2/bn/scale_splitncnn_1 pool7_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc7_1/sqz        1 1 pool7_1/gap fc7_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu7_1/sqz      1 1 fc7_1/sqz fc7_1/sqz_relu7_1/sqz
+InnerProduct     fc7_1/exc        1 1 fc7_1/sqz_relu7_1/sqz fc7_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm7_1/gate     1 1 fc7_1/exc fc7_1/exc_sigm7_1/gate
+Scale            scale7_1         2 1 stage_3_3/conv2_stage_3_3/conv2/bn/scale_splitncnn_0 fc7_1/exc_sigm7_1/gate scale7_1 0=-233 1=0
+Convolution      stage_3_3/conv3  1 1 scale7_1 stage_3_3/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_3/conv3/bn 1 1 stage_3_3/conv3 stage_3_3/conv3_stage_3_3/conv3/bn 0=116
+Scale            stage_3_3/conv3/bn/scale 1 1 stage_3_3/conv3_stage_3_3/conv3/bn stage_3_3/conv3_stage_3_3/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_3/conv3/relu 1 1 stage_3_3/conv3_stage_3_3/conv3/bn/scale stage_3_3/conv3_stage_3_3/conv3/relu
+Concat           stage_3_3/concat 2 1 stage_3_3/slice1 stage_3_3/conv3_stage_3_3/conv3/relu stage_3_3/concat 0=0
+ShuffleChannel   stage_3_3/shuffle 1 1 stage_3_3/concat stage_3_3/shuffle 0=2
+Slice            stage_3_4/slice1 1 2 stage_3_3/shuffle stage_3_4/slice1 stage_3_4/slice2 -23300=2,116,-233 1=0
+Convolution      stage_3_4/conv1  1 1 stage_3_4/slice2 stage_3_4/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_4/conv1/bn 1 1 stage_3_4/conv1 stage_3_4/conv1_stage_3_4/conv1/bn 0=116
+Scale            stage_3_4/conv1/bn/scale 1 1 stage_3_4/conv1_stage_3_4/conv1/bn stage_3_4/conv1_stage_3_4/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_4/conv1/relu 1 1 stage_3_4/conv1_stage_3_4/conv1/bn/scale stage_3_4/conv1_stage_3_4/conv1/relu
+ConvolutionDepthWise stage_3_4/conv2  1 1 stage_3_4/conv1_stage_3_4/conv1/relu stage_3_4/conv2 0=116 1=5 2=1 3=1 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_4/conv2/bn 1 1 stage_3_4/conv2 stage_3_4/conv2_stage_3_4/conv2/bn 0=116
+Scale            stage_3_4/conv2/bn/scale 1 1 stage_3_4/conv2_stage_3_4/conv2/bn stage_3_4/conv2_stage_3_4/conv2/bn/scale 0=116 1=1
+Split            splitncnn_12     1 2 stage_3_4/conv2_stage_3_4/conv2/bn/scale stage_3_4/conv2_stage_3_4/conv2/bn/scale_splitncnn_0 stage_3_4/conv2_stage_3_4/conv2/bn/scale_splitncnn_1
+Pooling          pool8_1/gap      1 1 stage_3_4/conv2_stage_3_4/conv2/bn/scale_splitncnn_1 pool8_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc8_1/sqz        1 1 pool8_1/gap fc8_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu8_1/sqz      1 1 fc8_1/sqz fc8_1/sqz_relu8_1/sqz
+InnerProduct     fc8_1/exc        1 1 fc8_1/sqz_relu8_1/sqz fc8_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm8_1/gate     1 1 fc8_1/exc fc8_1/exc_sigm8_1/gate
+Scale            scale8_1         2 1 stage_3_4/conv2_stage_3_4/conv2/bn/scale_splitncnn_0 fc8_1/exc_sigm8_1/gate scale8_1 0=-233 1=0
+Convolution      stage_3_4/conv3  1 1 scale8_1 stage_3_4/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_4/conv3/bn 1 1 stage_3_4/conv3 stage_3_4/conv3_stage_3_4/conv3/bn 0=116
+Scale            stage_3_4/conv3/bn/scale 1 1 stage_3_4/conv3_stage_3_4/conv3/bn stage_3_4/conv3_stage_3_4/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_4/conv3/relu 1 1 stage_3_4/conv3_stage_3_4/conv3/bn/scale stage_3_4/conv3_stage_3_4/conv3/relu
+Concat           stage_3_4/concat 2 1 stage_3_4/slice1 stage_3_4/conv3_stage_3_4/conv3/relu stage_3_4/concat 0=0
+ShuffleChannel   stage_3_4/shuffle 1 1 stage_3_4/concat stage_3_4/shuffle 0=2
+Slice            stage_3_5/slice1 1 2 stage_3_4/shuffle stage_3_5/slice1 stage_3_5/slice2 -23300=2,116,-233 1=0
+Convolution      stage_3_5/conv1  1 1 stage_3_5/slice2 stage_3_5/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_5/conv1/bn 1 1 stage_3_5/conv1 stage_3_5/conv1_stage_3_5/conv1/bn 0=116
+Scale            stage_3_5/conv1/bn/scale 1 1 stage_3_5/conv1_stage_3_5/conv1/bn stage_3_5/conv1_stage_3_5/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_5/conv1/relu 1 1 stage_3_5/conv1_stage_3_5/conv1/bn/scale stage_3_5/conv1_stage_3_5/conv1/relu
+ConvolutionDepthWise stage_3_5/conv2  1 1 stage_3_5/conv1_stage_3_5/conv1/relu stage_3_5/conv2 0=116 1=5 2=1 3=1 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_5/conv2/bn 1 1 stage_3_5/conv2 stage_3_5/conv2_stage_3_5/conv2/bn 0=116
+Scale            stage_3_5/conv2/bn/scale 1 1 stage_3_5/conv2_stage_3_5/conv2/bn stage_3_5/conv2_stage_3_5/conv2/bn/scale 0=116 1=1
+Split            splitncnn_13     1 2 stage_3_5/conv2_stage_3_5/conv2/bn/scale stage_3_5/conv2_stage_3_5/conv2/bn/scale_splitncnn_0 stage_3_5/conv2_stage_3_5/conv2/bn/scale_splitncnn_1
+Pooling          pool9_1/gap      1 1 stage_3_5/conv2_stage_3_5/conv2/bn/scale_splitncnn_1 pool9_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc9_1/sqz        1 1 pool9_1/gap fc9_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu9_1/sqz      1 1 fc9_1/sqz fc9_1/sqz_relu9_1/sqz
+InnerProduct     fc9_1/exc        1 1 fc9_1/sqz_relu9_1/sqz fc9_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm9_1/gate     1 1 fc9_1/exc fc9_1/exc_sigm9_1/gate
+Scale            scale9_1         2 1 stage_3_5/conv2_stage_3_5/conv2/bn/scale_splitncnn_0 fc9_1/exc_sigm9_1/gate scale9_1 0=-233 1=0
+Convolution      stage_3_5/conv3  1 1 scale9_1 stage_3_5/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_5/conv3/bn 1 1 stage_3_5/conv3 stage_3_5/conv3_stage_3_5/conv3/bn 0=116
+Scale            stage_3_5/conv3/bn/scale 1 1 stage_3_5/conv3_stage_3_5/conv3/bn stage_3_5/conv3_stage_3_5/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_5/conv3/relu 1 1 stage_3_5/conv3_stage_3_5/conv3/bn/scale stage_3_5/conv3_stage_3_5/conv3/relu
+Concat           stage_3_5/concat 2 1 stage_3_5/slice1 stage_3_5/conv3_stage_3_5/conv3/relu stage_3_5/concat 0=0
+ShuffleChannel   stage_3_5/shuffle 1 1 stage_3_5/concat stage_3_5/shuffle 0=2
+Slice            stage_3_6/slice1 1 2 stage_3_5/shuffle stage_3_6/slice1 stage_3_6/slice2 -23300=2,116,-233 1=0
+Convolution      stage_3_6/conv1  1 1 stage_3_6/slice2 stage_3_6/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_6/conv1/bn 1 1 stage_3_6/conv1 stage_3_6/conv1_stage_3_6/conv1/bn 0=116
+Scale            stage_3_6/conv1/bn/scale 1 1 stage_3_6/conv1_stage_3_6/conv1/bn stage_3_6/conv1_stage_3_6/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_6/conv1/relu 1 1 stage_3_6/conv1_stage_3_6/conv1/bn/scale stage_3_6/conv1_stage_3_6/conv1/relu
+ConvolutionDepthWise stage_3_6/conv2  1 1 stage_3_6/conv1_stage_3_6/conv1/relu stage_3_6/conv2 0=116 1=5 2=1 3=1 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_6/conv2/bn 1 1 stage_3_6/conv2 stage_3_6/conv2_stage_3_6/conv2/bn 0=116
+Scale            stage_3_6/conv2/bn/scale 1 1 stage_3_6/conv2_stage_3_6/conv2/bn stage_3_6/conv2_stage_3_6/conv2/bn/scale 0=116 1=1
+Split            splitncnn_14     1 2 stage_3_6/conv2_stage_3_6/conv2/bn/scale stage_3_6/conv2_stage_3_6/conv2/bn/scale_splitncnn_0 stage_3_6/conv2_stage_3_6/conv2/bn/scale_splitncnn_1
+Pooling          pool10_1/gap     1 1 stage_3_6/conv2_stage_3_6/conv2/bn/scale_splitncnn_1 pool10_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc10_1/sqz       1 1 pool10_1/gap fc10_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu10_1/sqz     1 1 fc10_1/sqz fc10_1/sqz_relu10_1/sqz
+InnerProduct     fc10_1/exc       1 1 fc10_1/sqz_relu10_1/sqz fc10_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm10_1/gate    1 1 fc10_1/exc fc10_1/exc_sigm10_1/gate
+Scale            scale10_1        2 1 stage_3_6/conv2_stage_3_6/conv2/bn/scale_splitncnn_0 fc10_1/exc_sigm10_1/gate scale10_1 0=-233 1=0
+Convolution      stage_3_6/conv3  1 1 scale10_1 stage_3_6/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_6/conv3/bn 1 1 stage_3_6/conv3 stage_3_6/conv3_stage_3_6/conv3/bn 0=116
+Scale            stage_3_6/conv3/bn/scale 1 1 stage_3_6/conv3_stage_3_6/conv3/bn stage_3_6/conv3_stage_3_6/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_6/conv3/relu 1 1 stage_3_6/conv3_stage_3_6/conv3/bn/scale stage_3_6/conv3_stage_3_6/conv3/relu
+Concat           stage_3_6/concat 2 1 stage_3_6/slice1 stage_3_6/conv3_stage_3_6/conv3/relu stage_3_6/concat 0=0
+ShuffleChannel   stage_3_6/shuffle 1 1 stage_3_6/concat stage_3_6/shuffle 0=2
+Slice            stage_3_7/slice1 1 2 stage_3_6/shuffle stage_3_7/slice1 stage_3_7/slice2 -23300=2,116,-233 1=0
+Convolution      stage_3_7/conv1  1 1 stage_3_7/slice2 stage_3_7/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_7/conv1/bn 1 1 stage_3_7/conv1 stage_3_7/conv1_stage_3_7/conv1/bn 0=116
+Scale            stage_3_7/conv1/bn/scale 1 1 stage_3_7/conv1_stage_3_7/conv1/bn stage_3_7/conv1_stage_3_7/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_7/conv1/relu 1 1 stage_3_7/conv1_stage_3_7/conv1/bn/scale stage_3_7/conv1_stage_3_7/conv1/relu
+ConvolutionDepthWise stage_3_7/conv2  1 1 stage_3_7/conv1_stage_3_7/conv1/relu stage_3_7/conv2 0=116 1=5 2=1 3=1 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_7/conv2/bn 1 1 stage_3_7/conv2 stage_3_7/conv2_stage_3_7/conv2/bn 0=116
+Scale            stage_3_7/conv2/bn/scale 1 1 stage_3_7/conv2_stage_3_7/conv2/bn stage_3_7/conv2_stage_3_7/conv2/bn/scale 0=116 1=1
+Split            splitncnn_15     1 2 stage_3_7/conv2_stage_3_7/conv2/bn/scale stage_3_7/conv2_stage_3_7/conv2/bn/scale_splitncnn_0 stage_3_7/conv2_stage_3_7/conv2/bn/scale_splitncnn_1
+Pooling          pool11_1/gap     1 1 stage_3_7/conv2_stage_3_7/conv2/bn/scale_splitncnn_1 pool11_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc11_1/sqz       1 1 pool11_1/gap fc11_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu11_1/sqz     1 1 fc11_1/sqz fc11_1/sqz_relu11_1/sqz
+InnerProduct     fc11_1/exc       1 1 fc11_1/sqz_relu11_1/sqz fc11_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm11_1/gate    1 1 fc11_1/exc fc11_1/exc_sigm11_1/gate
+Scale            scale11_1        2 1 stage_3_7/conv2_stage_3_7/conv2/bn/scale_splitncnn_0 fc11_1/exc_sigm11_1/gate scale11_1 0=-233 1=0
+Convolution      stage_3_7/conv3  1 1 scale11_1 stage_3_7/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_7/conv3/bn 1 1 stage_3_7/conv3 stage_3_7/conv3_stage_3_7/conv3/bn 0=116
+Scale            stage_3_7/conv3/bn/scale 1 1 stage_3_7/conv3_stage_3_7/conv3/bn stage_3_7/conv3_stage_3_7/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_7/conv3/relu 1 1 stage_3_7/conv3_stage_3_7/conv3/bn/scale stage_3_7/conv3_stage_3_7/conv3/relu
+Concat           stage_3_7/concat 2 1 stage_3_7/slice1 stage_3_7/conv3_stage_3_7/conv3/relu stage_3_7/concat 0=0
+ShuffleChannel   stage_3_7/shuffle 1 1 stage_3_7/concat stage_3_7/shuffle 0=2
+Slice            stage_3_8/slice1 1 2 stage_3_7/shuffle stage_3_8/slice1 stage_3_8/slice2 -23300=2,116,-233 1=0
+Convolution      stage_3_8/conv1  1 1 stage_3_8/slice2 stage_3_8/conv1 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_8/conv1/bn 1 1 stage_3_8/conv1 stage_3_8/conv1_stage_3_8/conv1/bn 0=116
+Scale            stage_3_8/conv1/bn/scale 1 1 stage_3_8/conv1_stage_3_8/conv1/bn stage_3_8/conv1_stage_3_8/conv1/bn/scale 0=116 1=1
+ReLU             stage_3_8/conv1/relu 1 1 stage_3_8/conv1_stage_3_8/conv1/bn/scale stage_3_8/conv1_stage_3_8/conv1/relu
+ConvolutionDepthWise stage_3_8/conv2  1 1 stage_3_8/conv1_stage_3_8/conv1/relu stage_3_8/conv2 0=116 1=5 2=1 3=1 4=2 5=0 6=2900 7=116
+BatchNorm        stage_3_8/conv2/bn 1 1 stage_3_8/conv2 stage_3_8/conv2_stage_3_8/conv2/bn 0=116
+Scale            stage_3_8/conv2/bn/scale 1 1 stage_3_8/conv2_stage_3_8/conv2/bn stage_3_8/conv2_stage_3_8/conv2/bn/scale 0=116 1=1
+Split            splitncnn_16     1 2 stage_3_8/conv2_stage_3_8/conv2/bn/scale stage_3_8/conv2_stage_3_8/conv2/bn/scale_splitncnn_0 stage_3_8/conv2_stage_3_8/conv2/bn/scale_splitncnn_1
+Pooling          pool12_1/gap     1 1 stage_3_8/conv2_stage_3_8/conv2/bn/scale_splitncnn_1 pool12_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc12_1/sqz       1 1 pool12_1/gap fc12_1/sqz 0=8 1=1 2=928 3=1
+ReLU             relu12_1/sqz     1 1 fc12_1/sqz fc12_1/sqz_relu12_1/sqz
+InnerProduct     fc12_1/exc       1 1 fc12_1/sqz_relu12_1/sqz fc12_1/exc 0=116 1=1 2=928 3=1
+Sigmoid          sigm12_1/gate    1 1 fc12_1/exc fc12_1/exc_sigm12_1/gate
+Scale            scale12_1        2 1 stage_3_8/conv2_stage_3_8/conv2/bn/scale_splitncnn_0 fc12_1/exc_sigm12_1/gate scale12_1 0=-233 1=0
+Convolution      stage_3_8/conv3  1 1 scale12_1 stage_3_8/conv3 0=116 1=1 2=1 3=1 4=0 5=0 6=13456
+BatchNorm        stage_3_8/conv3/bn 1 1 stage_3_8/conv3 stage_3_8/conv3_stage_3_8/conv3/bn 0=116
+Scale            stage_3_8/conv3/bn/scale 1 1 stage_3_8/conv3_stage_3_8/conv3/bn stage_3_8/conv3_stage_3_8/conv3/bn/scale 0=116 1=1
+ReLU             stage_3_8/conv3/relu 1 1 stage_3_8/conv3_stage_3_8/conv3/bn/scale stage_3_8/conv3_stage_3_8/conv3/relu
+Concat           stage_3_8/concat 2 1 stage_3_8/slice1 stage_3_8/conv3_stage_3_8/conv3/relu stage_3_8/concat 0=0
+Split            splitncnn_17     1 2 stage_3_8/concat stage_3_8/concat_splitncnn_0 stage_3_8/concat_splitncnn_1
+ShuffleChannel   stage_3_8/shuffle 1 1 stage_3_8/concat_splitncnn_1 stage_3_8/shuffle 0=2
+Split            splitncnn_18     1 2 stage_3_8/shuffle stage_3_8/shuffle_splitncnn_0 stage_3_8/shuffle_splitncnn_1
+ConvolutionDepthWise stage_4_1/conv4  1 1 stage_3_8/shuffle_splitncnn_1 stage_4_1/conv4 0=232 1=5 2=1 3=2 4=2 5=0 6=5800 7=232
+BatchNorm        stage_4_1/conv4/bn 1 1 stage_4_1/conv4 stage_4_1/conv4_stage_4_1/conv4/bn 0=232
+Scale            stage_4_1/conv4/bn/scale 1 1 stage_4_1/conv4_stage_4_1/conv4/bn stage_4_1/conv4_stage_4_1/conv4/bn/scale 0=232 1=1
+Split            splitncnn_19     1 2 stage_4_1/conv4_stage_4_1/conv4/bn/scale stage_4_1/conv4_stage_4_1/conv4/bn/scale_splitncnn_0 stage_4_1/conv4_stage_4_1/conv4/bn/scale_splitncnn_1
+Pooling          pool13_1/gap     1 1 stage_4_1/conv4_stage_4_1/conv4/bn/scale_splitncnn_1 pool13_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc13_1/sqz       1 1 pool13_1/gap fc13_1/sqz 0=16 1=1 2=3712 3=1
+ReLU             relu13_1/sqz     1 1 fc13_1/sqz fc13_1/sqz_relu13_1/sqz
+InnerProduct     fc13_1/exc       1 1 fc13_1/sqz_relu13_1/sqz fc13_1/exc 0=232 1=1 2=3712 3=1
+Sigmoid          sigm13_1/gate    1 1 fc13_1/exc fc13_1/exc_sigm13_1/gate
+Scale            scale13_1        2 1 stage_4_1/conv4_stage_4_1/conv4/bn/scale_splitncnn_0 fc13_1/exc_sigm13_1/gate scale13_1 0=-233 1=0
+Convolution      stage_4_1/conv5  1 1 scale13_1 stage_4_1/conv5 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_1/conv5/bn 1 1 stage_4_1/conv5 stage_4_1/conv5_stage_4_1/conv5/bn 0=232
+Scale            stage_4_1/conv5/bn/scale 1 1 stage_4_1/conv5_stage_4_1/conv5/bn stage_4_1/conv5_stage_4_1/conv5/bn/scale 0=232 1=1
+ReLU             stage_4_1/conv5/relu 1 1 stage_4_1/conv5_stage_4_1/conv5/bn/scale stage_4_1/conv5_stage_4_1/conv5/relu
+Convolution      stage_4_1/conv1  1 1 stage_3_8/shuffle_splitncnn_0 stage_4_1/conv1 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_1/conv1/bn 1 1 stage_4_1/conv1 stage_4_1/conv1_stage_4_1/conv1/bn 0=232
+Scale            stage_4_1/conv1/bn/scale 1 1 stage_4_1/conv1_stage_4_1/conv1/bn stage_4_1/conv1_stage_4_1/conv1/bn/scale 0=232 1=1
+ReLU             stage_4_1/conv1/relu 1 1 stage_4_1/conv1_stage_4_1/conv1/bn/scale stage_4_1/conv1_stage_4_1/conv1/relu
+ConvolutionDepthWise stage_4_1/conv2  1 1 stage_4_1/conv1_stage_4_1/conv1/relu stage_4_1/conv2 0=232 1=5 2=1 3=2 4=2 5=0 6=5800 7=232
+BatchNorm        stage_4_1/conv2/bn 1 1 stage_4_1/conv2 stage_4_1/conv2_stage_4_1/conv2/bn 0=232
+Scale            stage_4_1/conv2/bn/scale 1 1 stage_4_1/conv2_stage_4_1/conv2/bn stage_4_1/conv2_stage_4_1/conv2/bn/scale 0=232 1=1
+Split            splitncnn_20     1 2 stage_4_1/conv2_stage_4_1/conv2/bn/scale stage_4_1/conv2_stage_4_1/conv2/bn/scale_splitncnn_0 stage_4_1/conv2_stage_4_1/conv2/bn/scale_splitncnn_1
+Pooling          pool13_2/gap     1 1 stage_4_1/conv2_stage_4_1/conv2/bn/scale_splitncnn_1 pool13_2/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc13_2/sqz       1 1 pool13_2/gap fc13_2/sqz 0=16 1=1 2=3712 3=1
+ReLU             relu13_2/sqz     1 1 fc13_2/sqz fc13_2/sqz_relu13_2/sqz
+InnerProduct     fc13_2/exc       1 1 fc13_2/sqz_relu13_2/sqz fc13_2/exc 0=232 1=1 2=3712 3=1
+Sigmoid          sigm13_2/gate    1 1 fc13_2/exc fc13_2/exc_sigm13_2/gate
+Scale            scale13_2        2 1 stage_4_1/conv2_stage_4_1/conv2/bn/scale_splitncnn_0 fc13_2/exc_sigm13_2/gate scale13_2 0=-233 1=0
+Convolution      stage_4_1/conv3  1 1 scale13_2 stage_4_1/conv3 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_1/conv3/bn 1 1 stage_4_1/conv3 stage_4_1/conv3_stage_4_1/conv3/bn 0=232
+Scale            stage_4_1/conv3/bn/scale 1 1 stage_4_1/conv3_stage_4_1/conv3/bn stage_4_1/conv3_stage_4_1/conv3/bn/scale 0=232 1=1
+ReLU             stage_4_1/conv3/relu 1 1 stage_4_1/conv3_stage_4_1/conv3/bn/scale stage_4_1/conv3_stage_4_1/conv3/relu
+Concat           stage_4_1/concat 2 1 stage_4_1/conv5_stage_4_1/conv5/relu stage_4_1/conv3_stage_4_1/conv3/relu stage_4_1/concat 0=0
+ShuffleChannel   stage_4_1/shuffle 1 1 stage_4_1/concat stage_4_1/shuffle 0=2
+Slice            stage_4_2/slice1 1 2 stage_4_1/shuffle stage_4_2/slice1 stage_4_2/slice2 -23300=2,232,-233 1=0
+Convolution      stage_4_2/conv1  1 1 stage_4_2/slice2 stage_4_2/conv1 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_2/conv1/bn 1 1 stage_4_2/conv1 stage_4_2/conv1_stage_4_2/conv1/bn 0=232
+Scale            stage_4_2/conv1/bn/scale 1 1 stage_4_2/conv1_stage_4_2/conv1/bn stage_4_2/conv1_stage_4_2/conv1/bn/scale 0=232 1=1
+ReLU             stage_4_2/conv1/relu 1 1 stage_4_2/conv1_stage_4_2/conv1/bn/scale stage_4_2/conv1_stage_4_2/conv1/relu
+ConvolutionDepthWise stage_4_2/conv2  1 1 stage_4_2/conv1_stage_4_2/conv1/relu stage_4_2/conv2 0=232 1=5 2=1 3=1 4=2 5=0 6=5800 7=232
+BatchNorm        stage_4_2/conv2/bn 1 1 stage_4_2/conv2 stage_4_2/conv2_stage_4_2/conv2/bn 0=232
+Scale            stage_4_2/conv2/bn/scale 1 1 stage_4_2/conv2_stage_4_2/conv2/bn stage_4_2/conv2_stage_4_2/conv2/bn/scale 0=232 1=1
+Split            splitncnn_21     1 2 stage_4_2/conv2_stage_4_2/conv2/bn/scale stage_4_2/conv2_stage_4_2/conv2/bn/scale_splitncnn_0 stage_4_2/conv2_stage_4_2/conv2/bn/scale_splitncnn_1
+Pooling          pool14_1/gap     1 1 stage_4_2/conv2_stage_4_2/conv2/bn/scale_splitncnn_1 pool14_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc14_1/sqz       1 1 pool14_1/gap fc14_1/sqz 0=16 1=1 2=3712 3=1
+ReLU             relu14_1/sqz     1 1 fc14_1/sqz fc14_1/sqz_relu14_1/sqz
+InnerProduct     fc14_1/exc       1 1 fc14_1/sqz_relu14_1/sqz fc14_1/exc 0=232 1=1 2=3712 3=1
+Sigmoid          sigm14_1/gate    1 1 fc14_1/exc fc14_1/exc_sigm14_1/gate
+Scale            scale14_1        2 1 stage_4_2/conv2_stage_4_2/conv2/bn/scale_splitncnn_0 fc14_1/exc_sigm14_1/gate scale14_1 0=-233 1=0
+Convolution      stage_4_2/conv3  1 1 scale14_1 stage_4_2/conv3 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_2/conv3/bn 1 1 stage_4_2/conv3 stage_4_2/conv3_stage_4_2/conv3/bn 0=232
+Scale            stage_4_2/conv3/bn/scale 1 1 stage_4_2/conv3_stage_4_2/conv3/bn stage_4_2/conv3_stage_4_2/conv3/bn/scale 0=232 1=1
+ReLU             stage_4_2/conv3/relu 1 1 stage_4_2/conv3_stage_4_2/conv3/bn/scale stage_4_2/conv3_stage_4_2/conv3/relu
+Concat           stage_4_2/concat 2 1 stage_4_2/slice1 stage_4_2/conv3_stage_4_2/conv3/relu stage_4_2/concat 0=0
+ShuffleChannel   stage_4_2/shuffle 1 1 stage_4_2/concat stage_4_2/shuffle 0=2
+Slice            stage_4_3/slice1 1 2 stage_4_2/shuffle stage_4_3/slice1 stage_4_3/slice2 -23300=2,232,-233 1=0
+Convolution      stage_4_3/conv1  1 1 stage_4_3/slice2 stage_4_3/conv1 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_3/conv1/bn 1 1 stage_4_3/conv1 stage_4_3/conv1_stage_4_3/conv1/bn 0=232
+Scale            stage_4_3/conv1/bn/scale 1 1 stage_4_3/conv1_stage_4_3/conv1/bn stage_4_3/conv1_stage_4_3/conv1/bn/scale 0=232 1=1
+ReLU             stage_4_3/conv1/relu 1 1 stage_4_3/conv1_stage_4_3/conv1/bn/scale stage_4_3/conv1_stage_4_3/conv1/relu
+ConvolutionDepthWise stage_4_3/conv2  1 1 stage_4_3/conv1_stage_4_3/conv1/relu stage_4_3/conv2 0=232 1=5 2=1 3=1 4=2 5=0 6=5800 7=232
+BatchNorm        stage_4_3/conv2/bn 1 1 stage_4_3/conv2 stage_4_3/conv2_stage_4_3/conv2/bn 0=232
+Scale            stage_4_3/conv2/bn/scale 1 1 stage_4_3/conv2_stage_4_3/conv2/bn stage_4_3/conv2_stage_4_3/conv2/bn/scale 0=232 1=1
+Split            splitncnn_22     1 2 stage_4_3/conv2_stage_4_3/conv2/bn/scale stage_4_3/conv2_stage_4_3/conv2/bn/scale_splitncnn_0 stage_4_3/conv2_stage_4_3/conv2/bn/scale_splitncnn_1
+Pooling          pool15_1/gap     1 1 stage_4_3/conv2_stage_4_3/conv2/bn/scale_splitncnn_1 pool15_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc15_1/sqz       1 1 pool15_1/gap fc15_1/sqz 0=16 1=1 2=3712 3=1
+ReLU             relu15_1/sqz     1 1 fc15_1/sqz fc15_1/sqz_relu15_1/sqz
+InnerProduct     fc15_1/exc       1 1 fc15_1/sqz_relu15_1/sqz fc15_1/exc 0=232 1=1 2=3712 3=1
+Sigmoid          sigm15_1/gate    1 1 fc15_1/exc fc15_1/exc_sigm15_1/gate
+Scale            scale15_1        2 1 stage_4_3/conv2_stage_4_3/conv2/bn/scale_splitncnn_0 fc15_1/exc_sigm15_1/gate scale15_1 0=-233 1=0
+Convolution      stage_4_3/conv3  1 1 scale15_1 stage_4_3/conv3 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_3/conv3/bn 1 1 stage_4_3/conv3 stage_4_3/conv3_stage_4_3/conv3/bn 0=232
+Scale            stage_4_3/conv3/bn/scale 1 1 stage_4_3/conv3_stage_4_3/conv3/bn stage_4_3/conv3_stage_4_3/conv3/bn/scale 0=232 1=1
+ReLU             stage_4_3/conv3/relu 1 1 stage_4_3/conv3_stage_4_3/conv3/bn/scale stage_4_3/conv3_stage_4_3/conv3/relu
+Concat           stage_4_3/concat 2 1 stage_4_3/slice1 stage_4_3/conv3_stage_4_3/conv3/relu stage_4_3/concat 0=0
+ShuffleChannel   stage_4_3/shuffle 1 1 stage_4_3/concat stage_4_3/shuffle 0=2
+Slice            stage_4_4/slice1 1 2 stage_4_3/shuffle stage_4_4/slice1 stage_4_4/slice2 -23300=2,232,-233 1=0
+Convolution      stage_4_4/conv1  1 1 stage_4_4/slice2 stage_4_4/conv1 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_4/conv1/bn 1 1 stage_4_4/conv1 stage_4_4/conv1_stage_4_4/conv1/bn 0=232
+Scale            stage_4_4/conv1/bn/scale 1 1 stage_4_4/conv1_stage_4_4/conv1/bn stage_4_4/conv1_stage_4_4/conv1/bn/scale 0=232 1=1
+ReLU             stage_4_4/conv1/relu 1 1 stage_4_4/conv1_stage_4_4/conv1/bn/scale stage_4_4/conv1_stage_4_4/conv1/relu
+ConvolutionDepthWise stage_4_4/conv2  1 1 stage_4_4/conv1_stage_4_4/conv1/relu stage_4_4/conv2 0=232 1=5 2=1 3=1 4=2 5=0 6=5800 7=232
+BatchNorm        stage_4_4/conv2/bn 1 1 stage_4_4/conv2 stage_4_4/conv2_stage_4_4/conv2/bn 0=232
+Scale            stage_4_4/conv2/bn/scale 1 1 stage_4_4/conv2_stage_4_4/conv2/bn stage_4_4/conv2_stage_4_4/conv2/bn/scale 0=232 1=1
+Split            splitncnn_23     1 2 stage_4_4/conv2_stage_4_4/conv2/bn/scale stage_4_4/conv2_stage_4_4/conv2/bn/scale_splitncnn_0 stage_4_4/conv2_stage_4_4/conv2/bn/scale_splitncnn_1
+Pooling          pool16_1/gap     1 1 stage_4_4/conv2_stage_4_4/conv2/bn/scale_splitncnn_1 pool16_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc16_1/sqz       1 1 pool16_1/gap fc16_1/sqz 0=16 1=1 2=3712 3=1
+ReLU             relu16_1/sqz     1 1 fc16_1/sqz fc16_1/sqz_relu16_1/sqz
+InnerProduct     fc16_1/exc       1 1 fc16_1/sqz_relu16_1/sqz fc16_1/exc 0=232 1=1 2=3712 3=1
+Sigmoid          sigm16_1/gate    1 1 fc16_1/exc fc16_1/exc_sigm16_1/gate
+Scale            scale16_1        2 1 stage_4_4/conv2_stage_4_4/conv2/bn/scale_splitncnn_0 fc16_1/exc_sigm16_1/gate scale16_1 0=-233 1=0
+Convolution      stage_4_4/conv3  1 1 scale16_1 stage_4_4/conv3 0=232 1=1 2=1 3=1 4=0 5=0 6=53824
+BatchNorm        stage_4_4/conv3/bn 1 1 stage_4_4/conv3 stage_4_4/conv3_stage_4_4/conv3/bn 0=232
+Scale            stage_4_4/conv3/bn/scale 1 1 stage_4_4/conv3_stage_4_4/conv3/bn stage_4_4/conv3_stage_4_4/conv3/bn/scale 0=232 1=1
+ReLU             stage_4_4/conv3/relu 1 1 stage_4_4/conv3_stage_4_4/conv3/bn/scale stage_4_4/conv3_stage_4_4/conv3/relu
+Concat           stage_4_4/concat 2 1 stage_4_4/slice1 stage_4_4/conv3_stage_4_4/conv3/relu stage_4_4/concat 0=0
+ShuffleChannel   stage_4_4/shuffle 1 1 stage_4_4/concat stage_4_4/shuffle 0=2
+Convolution      conv5            1 1 stage_4_4/shuffle conv5 0=1024 1=1 2=1 3=1 4=0 5=0 6=475136
+BatchNorm        conv5/bn         1 1 conv5 conv5_conv5/bn 0=1024
+Scale            conv5/bn/scale   1 1 conv5_conv5/bn conv5_conv5/bn/scale 0=1024 1=1
+ReLU             conv5/relu       1 1 conv5_conv5/bn/scale conv5_conv5/relu
+Split            splitncnn_24     1 4 conv5_conv5/relu conv5_conv5/relu_splitncnn_0 conv5_conv5/relu_splitncnn_1 conv5_conv5/relu_splitncnn_2 conv5_conv5/relu_splitncnn_3
+Convolution      conv10_1         1 1 conv5_conv5/relu_splitncnn_3 conv10_1 0=256 1=1 2=1 3=1 4=0 5=0 6=262144
+BatchNorm        conv10_1/bn      1 1 conv10_1 conv10_1_conv10_1/bn 0=256
+Scale            conv10_1/scale   1 1 conv10_1_conv10_1/bn conv10_1_conv10_1/scale 0=256 1=1
+Split            splitncnn_25     1 2 conv10_1_conv10_1/scale conv10_1_conv10_1/scale_splitncnn_0 conv10_1_conv10_1/scale_splitncnn_1
+Pooling          pool17_1/gap     1 1 conv10_1_conv10_1/scale_splitncnn_1 pool17_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc17_1/sqz       1 1 pool17_1/gap fc17_1/sqz 0=16 1=1 2=4096 3=1
+ReLU             relu17_1/sqz     1 1 fc17_1/sqz fc17_1/sqz_relu17_1/sqz
+InnerProduct     fc17_1/exc       1 1 fc17_1/sqz_relu17_1/sqz fc17_1/exc 0=256 1=1 2=4096 3=1
+Sigmoid          sigm17_1/gate    1 1 fc17_1/exc fc17_1/exc_sigm17_1/gate
+Scale            scale17_1        2 1 conv10_1_conv10_1/scale_splitncnn_0 fc17_1/exc_sigm17_1/gate scale17_1 0=-233 1=0
+Convolution      conv10_2         1 1 scale17_1 conv10_2 0=512 1=3 2=1 3=2 4=1 5=0 6=1179648
+BatchNorm        conv10_2/bn      1 1 conv10_2 conv10_2_conv10_2/bn 0=512
+Scale            conv10_2/scale   1 1 conv10_2_conv10_2/bn conv10_2_conv10_2/scale 0=512 1=1
+ReLU             conv10_2/relu    1 1 conv10_2_conv10_2/scale conv10_2_conv10_2/relu
+Split            splitncnn_26     1 4 conv10_2_conv10_2/relu conv10_2_conv10_2/relu_splitncnn_0 conv10_2_conv10_2/relu_splitncnn_1 conv10_2_conv10_2/relu_splitncnn_2 conv10_2_conv10_2/relu_splitncnn_3
+Convolution      conv11_1         1 1 conv10_2_conv10_2/relu_splitncnn_3 conv11_1 0=128 1=1 2=1 3=1 4=0 5=0 6=65536
+BatchNorm        conv11_1/bn      1 1 conv11_1 conv11_1_conv11_1/bn 0=128
+Scale            conv11_1/scale   1 1 conv11_1_conv11_1/bn conv11_1_conv11_1/scale 0=128 1=1
+Split            splitncnn_27     1 2 conv11_1_conv11_1/scale conv11_1_conv11_1/scale_splitncnn_0 conv11_1_conv11_1/scale_splitncnn_1
+Pooling          pool18_1/gap     1 1 conv11_1_conv11_1/scale_splitncnn_1 pool18_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc18_1/sqz       1 1 pool18_1/gap fc18_1/sqz 0=8 1=1 2=1024 3=1
+ReLU             relu18_1/sqz     1 1 fc18_1/sqz fc18_1/sqz_relu18_1/sqz
+InnerProduct     fc18_1/exc       1 1 fc18_1/sqz_relu18_1/sqz fc18_1/exc 0=128 1=1 2=1024 3=1
+Sigmoid          sigm18_1/gate    1 1 fc18_1/exc fc18_1/exc_sigm18_1/gate
+Scale            scale18_1        2 1 conv11_1_conv11_1/scale_splitncnn_0 fc18_1/exc_sigm18_1/gate scale18_1 0=-233 1=0
+Convolution      conv11_2         1 1 scale18_1 conv11_2 0=256 1=3 2=1 3=2 4=1 5=0 6=294912
+BatchNorm        conv11_2/bn      1 1 conv11_2 conv11_2_conv11_2/bn 0=256
+Scale            conv11_2/scale   1 1 conv11_2_conv11_2/bn conv11_2_conv11_2/scale 0=256 1=1
+ReLU             conv11_2/relu    1 1 conv11_2_conv11_2/scale conv11_2_conv11_2/relu
+Split            splitncnn_28     1 4 conv11_2_conv11_2/relu conv11_2_conv11_2/relu_splitncnn_0 conv11_2_conv11_2/relu_splitncnn_1 conv11_2_conv11_2/relu_splitncnn_2 conv11_2_conv11_2/relu_splitncnn_3
+Convolution      conv12_1         1 1 conv11_2_conv11_2/relu_splitncnn_3 conv12_1 0=128 1=1 2=1 3=1 4=0 5=0 6=32768
+BatchNorm        conv12_1/bn      1 1 conv12_1 conv12_1_conv12_1/bn 0=128
+Scale            conv12_1/scale   1 1 conv12_1_conv12_1/bn conv12_1_conv12_1/scale 0=128 1=1
+Split            splitncnn_29     1 2 conv12_1_conv12_1/scale conv12_1_conv12_1/scale_splitncnn_0 conv12_1_conv12_1/scale_splitncnn_1
+Pooling          pool19_1/gap     1 1 conv12_1_conv12_1/scale_splitncnn_1 pool19_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc19_1/sqz       1 1 pool19_1/gap fc19_1/sqz 0=8 1=1 2=1024 3=1
+ReLU             relu19_1/sqz     1 1 fc19_1/sqz fc19_1/sqz_relu19_1/sqz
+InnerProduct     fc19_1/exc       1 1 fc19_1/sqz_relu19_1/sqz fc19_1/exc 0=128 1=1 2=1024 3=1
+Sigmoid          sigm19_1/gate    1 1 fc19_1/exc fc19_1/exc_sigm19_1/gate
+Scale            scale19_1        2 1 conv12_1_conv12_1/scale_splitncnn_0 fc19_1/exc_sigm19_1/gate scale19_1 0=-233 1=0
+Convolution      conv12_2         1 1 scale19_1 conv12_2 0=256 1=3 2=1 3=2 4=1 5=0 6=294912
+BatchNorm        conv12_2/bn      1 1 conv12_2 conv12_2_conv12_2/bn 0=256
+Scale            conv12_2/scale   1 1 conv12_2_conv12_2/bn conv12_2_conv12_2/scale 0=256 1=1
+ReLU             conv12_2/relu    1 1 conv12_2_conv12_2/scale conv12_2_conv12_2/relu
+Split            splitncnn_30     1 4 conv12_2_conv12_2/relu conv12_2_conv12_2/relu_splitncnn_0 conv12_2_conv12_2/relu_splitncnn_1 conv12_2_conv12_2/relu_splitncnn_2 conv12_2_conv12_2/relu_splitncnn_3
+Convolution      conv13_1         1 1 conv12_2_conv12_2/relu_splitncnn_3 conv13_1 0=64 1=1 2=1 3=1 4=0 5=0 6=16384
+BatchNorm        conv13_1/bn      1 1 conv13_1 conv13_1_conv13_1/bn 0=64
+Scale            conv13_1/scale   1 1 conv13_1_conv13_1/bn conv13_1_conv13_1/scale 0=64 1=1
+Split            splitncnn_31     1 2 conv13_1_conv13_1/scale conv13_1_conv13_1/scale_splitncnn_0 conv13_1_conv13_1/scale_splitncnn_1
+Pooling          pool20_1/gap     1 1 conv13_1_conv13_1/scale_splitncnn_1 pool20_1/gap 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc20_1/sqz       1 1 pool20_1/gap fc20_1/sqz 0=8 1=1 2=512 3=1
+ReLU             relu20_1/sqz     1 1 fc20_1/sqz fc20_1/sqz_relu20_1/sqz
+InnerProduct     fc20_1/exc       1 1 fc20_1/sqz_relu20_1/sqz fc20_1/exc 0=64 1=1 2=512 3=1
+Sigmoid          sigm20_1/gate    1 1 fc20_1/exc fc20_1/exc_sigm20_1/gate
+Scale            scale20_1        2 1 conv13_1_conv13_1/scale_splitncnn_0 fc20_1/exc_sigm20_1/gate scale20_1 0=-233 1=0
+Convolution      conv13_2         1 1 scale20_1 conv13_2 0=128 1=3 2=1 3=2 4=1 5=0 6=73728
+BatchNorm        conv13_2/bn      1 1 conv13_2 conv13_2_conv13_2/bn 0=128
+Scale            conv13_2/scale   1 1 conv13_2_conv13_2/bn conv13_2_conv13_2/scale 0=128 1=1
+ReLU             conv13_2/relu    1 1 conv13_2_conv13_2/scale conv13_2_conv13_2/relu
+Split            splitncnn_32     1 3 conv13_2_conv13_2/relu conv13_2_conv13_2/relu_splitncnn_0 conv13_2_conv13_2/relu_splitncnn_1 conv13_2_conv13_2/relu_splitncnn_2
+Convolution      stage_3_8/concat/expand 1 1 stage_3_8/concat_splitncnn_0 stage_3_8/concat/expand 0=696 1=1 2=1 3=1 4=0 5=0 6=161472
+BatchNorm        stage_3_8/concat/expand/bn 1 1 stage_3_8/concat/expand stage_3_8/concat/expand_stage_3_8/concat/expand/bn 0=696
+Scale            stage_3_8/concat/expand/scale 1 1 stage_3_8/concat/expand_stage_3_8/concat/expand/bn stage_3_8/concat/expand_stage_3_8/concat/expand/scale 0=696 1=1
+ReLU             stage_3_8/concat/expand/relu 1 1 stage_3_8/concat/expand_stage_3_8/concat/expand/scale stage_3_8/concat/expand_stage_3_8/concat/expand/relu
+ConvolutionDepthWise stage_3_8/concat/dw 1 1 stage_3_8/concat/expand_stage_3_8/concat/expand/relu stage_3_8/concat/dw 0=696 1=5 2=1 3=1 4=2 5=0 6=17400 7=696
+BatchNorm        stage_3_8/concat/dw/bn 1 1 stage_3_8/concat/dw stage_3_8/concat/dw_stage_3_8/concat/dw/bn 0=696
+Scale            stage_3_8/concat/dw/scale 1 1 stage_3_8/concat/dw_stage_3_8/concat/dw/bn stage_3_8/concat/dw_stage_3_8/concat/dw/scale 0=696 1=1
+Split            splitncnn_33     1 2 stage_3_8/concat/dw_stage_3_8/concat/dw/scale stage_3_8/concat/dw_stage_3_8/concat/dw/scale_splitncnn_0 stage_3_8/concat/dw_stage_3_8/concat/dw/scale_splitncnn_1
+Pooling          pool1_1/gap/stage_3_8/concat/dw 1 1 stage_3_8/concat/dw_stage_3_8/concat/dw/scale_splitncnn_1 pool1_1/gap/concat 0=1 1=0 2=1 3=0 4=1
+InnerProduct     fc1_1/sqz/concat 1 1 pool1_1/gap/concat fc1_1/sqz/concat 0=29 1=1 2=20184 3=1
+ReLU             relu1_1/sqz/concat 1 1 fc1_1/sqz/concat fc1_1/sqz/concat_relu1_1/sqz/concat
+InnerProduct     fc1_1/exc/concat 1 1 fc1_1/sqz/concat_relu1_1/sqz/concat fc1_1/exc/concat 0=696 1=1 2=20184 3=1
+Sigmoid          sigm1_1/gate/concat 1 1 fc1_1/exc/concat fc1_1/exc/concat_sigm1_1/gate/concat
+Scale            scale1_1/concat  2 1 stage_3_8/concat/dw_stage_3_8/concat/dw/scale_splitncnn_0 fc1_1/exc/concat_sigm1_1/gate/concat scale1_1/concat 0=-233 1=0
+Convolution      stage_3_8/concat/conv1 1 1 scale1_1/concat stage_3_8/concat/conv1 0=232 1=1 2=1 3=1 4=0 5=0 6=161472
+BatchNorm        stage_3_8/concat/conv1/bn 1 1 stage_3_8/concat/conv1 stage_3_8/concat/conv1_stage_3_8/concat/conv1/bn 0=232
+Scale            stage_3_8/concat/conv1/scale 1 1 stage_3_8/concat/conv1_stage_3_8/concat/conv1/bn stage_3_8/concat/conv1_stage_3_8/concat/conv1/scale 0=232 1=1
+ReLU             stage_3_8/concat/conv1/relu 1 1 stage_3_8/concat/conv1_stage_3_8/concat/conv1/scale stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu
+Split            splitncnn_34     1 3 stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu_splitncnn_0 stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu_splitncnn_1 stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu_splitncnn_2
+Convolution      stage_3_8/concat_mbox_loc 1 1 stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu_splitncnn_2 stage_3_8/concat_mbox_loc 0=12 1=1 2=1 3=1 4=0 5=1 6=2784
+Permute          stage_3_8/concat_mbox_loc_perm 1 1 stage_3_8/concat_mbox_loc stage_3_8/concat_mbox_loc_perm 0=3
+Flatten          stage_3_8/concat_mbox_loc_flat 1 1 stage_3_8/concat_mbox_loc_perm stage_3_8/concat_mbox_loc_flat
+Convolution      stage_3_8/concat_mbox_conf 1 1 stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu_splitncnn_1 stage_3_8/concat_mbox_conf 0=63 1=1 2=1 3=1 4=0 5=1 6=14616
+Permute          stage_3_8/concat_mbox_conf_perm 1 1 stage_3_8/concat_mbox_conf stage_3_8/concat_mbox_conf_perm 0=3
+Flatten          stage_3_8/concat_mbox_conf_flat 1 1 stage_3_8/concat_mbox_conf_perm stage_3_8/concat_mbox_conf_flat
+PriorBox         stage_3_8/concat_mbox_priorbox 2 1 stage_3_8/concat/conv1_stage_3_8/concat/conv1/relu_splitncnn_0 data_splitncnn_5 stage_3_8/concat_mbox_priorbox -23300=1,60.000000 -23301=0 -23302=1,2.000000 3=0.100000 4=0.100000 5=0.200000 6=0.200000 7=1 8=0 9=-233 10=-233 11=-233.000000 12=-233.000000 13=0.500000 14=0
+Convolution      conv5_mbox_loc   1 1 conv5_conv5/relu_splitncnn_2 conv5_mbox_loc 0=24 1=1 2=1 3=1 4=0 5=1 6=24576
+Permute          conv5_mbox_loc_perm 1 1 conv5_mbox_loc conv5_mbox_loc_perm 0=3
+Flatten          conv5_mbox_loc_flat 1 1 conv5_mbox_loc_perm conv5_mbox_loc_flat
+Convolution      conv5_mbox_conf  1 1 conv5_conv5/relu_splitncnn_1 conv5_mbox_conf 0=126 1=1 2=1 3=1 4=0 5=1 6=129024
+Permute          conv5_mbox_conf_perm 1 1 conv5_mbox_conf conv5_mbox_conf_perm 0=3
+Flatten          conv5_mbox_conf_flat 1 1 conv5_mbox_conf_perm conv5_mbox_conf_flat
+PriorBox         conv5_mbox_priorbox 2 1 conv5_conv5/relu_splitncnn_0 data_splitncnn_4 conv5_mbox_priorbox -23300=1,105.000000 -23301=1,150.000000 -23302=2,2.000000,3.000000 3=0.100000 4=0.100000 5=0.200000 6=0.200000 7=1 8=0 9=-233 10=-233 11=-233.000000 12=-233.000000 13=0.500000 14=0
+Convolution      conv10_2_mbox_loc 1 1 conv10_2_conv10_2/relu_splitncnn_2 conv10_2_mbox_loc 0=24 1=1 2=1 3=1 4=0 5=1 6=12288
+Permute          conv10_2_mbox_loc_perm 1 1 conv10_2_mbox_loc conv10_2_mbox_loc_perm 0=3
+Flatten          conv10_2_mbox_loc_flat 1 1 conv10_2_mbox_loc_perm conv10_2_mbox_loc_flat
+Convolution      conv10_2_mbox_conf 1 1 conv10_2_conv10_2/relu_splitncnn_1 conv10_2_mbox_conf 0=126 1=1 2=1 3=1 4=0 5=1 6=64512
+Permute          conv10_2_mbox_conf_perm 1 1 conv10_2_mbox_conf conv10_2_mbox_conf_perm 0=3
+Flatten          conv10_2_mbox_conf_flat 1 1 conv10_2_mbox_conf_perm conv10_2_mbox_conf_flat
+PriorBox         conv10_2_mbox_priorbox 2 1 conv10_2_conv10_2/relu_splitncnn_0 data_splitncnn_3 conv10_2_mbox_priorbox -23300=1,150.000000 -23301=1,195.000000 -23302=2,2.000000,3.000000 3=0.100000 4=0.100000 5=0.200000 6=0.200000 7=1 8=0 9=-233 10=-233 11=-233.000000 12=-233.000000 13=0.500000 14=0
+Convolution      conv11_2_mbox_loc 1 1 conv11_2_conv11_2/relu_splitncnn_2 conv11_2_mbox_loc 0=24 1=1 2=1 3=1 4=0 5=1 6=6144
+Permute          conv11_2_mbox_loc_perm 1 1 conv11_2_mbox_loc conv11_2_mbox_loc_perm 0=3
+Flatten          conv11_2_mbox_loc_flat 1 1 conv11_2_mbox_loc_perm conv11_2_mbox_loc_flat
+Convolution      conv11_2_mbox_conf 1 1 conv11_2_conv11_2/relu_splitncnn_1 conv11_2_mbox_conf 0=126 1=1 2=1 3=1 4=0 5=1 6=32256
+Permute          conv11_2_mbox_conf_perm 1 1 conv11_2_mbox_conf conv11_2_mbox_conf_perm 0=3
+Flatten          conv11_2_mbox_conf_flat 1 1 conv11_2_mbox_conf_perm conv11_2_mbox_conf_flat
+PriorBox         conv11_2_mbox_priorbox 2 1 conv11_2_conv11_2/relu_splitncnn_0 data_splitncnn_2 conv11_2_mbox_priorbox -23300=1,195.000000 -23301=1,240.000000 -23302=2,2.000000,3.000000 3=0.100000 4=0.100000 5=0.200000 6=0.200000 7=1 8=0 9=-233 10=-233 11=-233.000000 12=-233.000000 13=0.500000 14=0
+Convolution      conv12_2_mbox_loc 1 1 conv12_2_conv12_2/relu_splitncnn_2 conv12_2_mbox_loc 0=24 1=1 2=1 3=1 4=0 5=1 6=6144
+Permute          conv12_2_mbox_loc_perm 1 1 conv12_2_mbox_loc conv12_2_mbox_loc_perm 0=3
+Flatten          conv12_2_mbox_loc_flat 1 1 conv12_2_mbox_loc_perm conv12_2_mbox_loc_flat
+Convolution      conv12_2_mbox_conf 1 1 conv12_2_conv12_2/relu_splitncnn_1 conv12_2_mbox_conf 0=126 1=1 2=1 3=1 4=0 5=1 6=32256
+Permute          conv12_2_mbox_conf_perm 1 1 conv12_2_mbox_conf conv12_2_mbox_conf_perm 0=3
+Flatten          conv12_2_mbox_conf_flat 1 1 conv12_2_mbox_conf_perm conv12_2_mbox_conf_flat
+PriorBox         conv12_2_mbox_priorbox 2 1 conv12_2_conv12_2/relu_splitncnn_0 data_splitncnn_1 conv12_2_mbox_priorbox -23300=1,240.000000 -23301=1,285.000000 -23302=2,2.000000,3.000000 3=0.100000 4=0.100000 5=0.200000 6=0.200000 7=1 8=0 9=-233 10=-233 11=-233.000000 12=-233.000000 13=0.500000 14=0
+Convolution      conv13_2_mbox_loc 1 1 conv13_2_conv13_2/relu_splitncnn_2 conv13_2_mbox_loc 0=24 1=1 2=1 3=1 4=0 5=1 6=3072
+Permute          conv13_2_mbox_loc_perm 1 1 conv13_2_mbox_loc conv13_2_mbox_loc_perm 0=3
+Flatten          conv13_2_mbox_loc_flat 1 1 conv13_2_mbox_loc_perm conv13_2_mbox_loc_flat
+Convolution      conv13_2_mbox_conf 1 1 conv13_2_conv13_2/relu_splitncnn_1 conv13_2_mbox_conf 0=126 1=1 2=1 3=1 4=0 5=1 6=16128
+Permute          conv13_2_mbox_conf_perm 1 1 conv13_2_mbox_conf conv13_2_mbox_conf_perm 0=3
+Flatten          conv13_2_mbox_conf_flat 1 1 conv13_2_mbox_conf_perm conv13_2_mbox_conf_flat
+PriorBox         conv13_2_mbox_priorbox 2 1 conv13_2_conv13_2/relu_splitncnn_0 data_splitncnn_0 conv13_2_mbox_priorbox -23300=1,285.000000 -23301=1,300.000000 -23302=2,2.000000,3.000000 3=0.100000 4=0.100000 5=0.200000 6=0.200000 7=1 8=0 9=-233 10=-233 11=-233.000000 12=-233.000000 13=0.500000 14=0
+Concat           mbox_loc         6 1 stage_3_8/concat_mbox_loc_flat conv5_mbox_loc_flat conv10_2_mbox_loc_flat conv11_2_mbox_loc_flat conv12_2_mbox_loc_flat conv13_2_mbox_loc_flat mbox_loc 0=0
+Concat           mbox_conf        6 1 stage_3_8/concat_mbox_conf_flat conv5_mbox_conf_flat conv10_2_mbox_conf_flat conv11_2_mbox_conf_flat conv12_2_mbox_conf_flat conv13_2_mbox_conf_flat mbox_conf 0=0
+Concat           mbox_priorbox    6 1 stage_3_8/concat_mbox_priorbox conv5_mbox_priorbox conv10_2_mbox_priorbox conv11_2_mbox_priorbox conv12_2_mbox_priorbox conv13_2_mbox_priorbox mbox_priorbox 0=1
+Reshape          mbox_conf_reshape 1 1 mbox_conf mbox_conf_reshape 0=21 1=-1 2=-233 3=0
+Softmax          mbox_conf_softmax 1 1 mbox_conf_reshape mbox_conf_softmax 0=1 1=1
+Flatten          mbox_conf_flatten 1 1 mbox_conf_softmax mbox_conf_flatten
+DetectionOutput  detection_out    3 1 mbox_loc mbox_conf_flatten mbox_priorbox detection_out 0=21 1=0.450000 2=100 3=100 4=0.250000
